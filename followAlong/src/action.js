@@ -1,6 +1,6 @@
-const SET_TITLE = "SET_TITLE";
-const SET_EDITING = "SET_EDITING";
-const SET_NEWTEXTTITLE = "SET_NEWTEXTTITLE";
+export const SET_TITLE = "SET_TITLE";
+export const SET_EDITING = "SET_EDITING";
+export const SET_NEWTEXTTITLE = "SET_NEWTEXTTITLE";
 
 export default {
     setTitle: (title) => {
