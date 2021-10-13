@@ -34,3 +34,6 @@
 //         }
 //     }
 // }
+
+const something = {name: 'jacob', age: 30, yearsDeveloping: 4, name: 'james'}
+console.log(something);
