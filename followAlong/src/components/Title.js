@@ -1,42 +1,9 @@
 import React, { useState, useReducer } from 'react';
-
-const initialState = { title: 'Hello earthlings!', editing: false, newTitleText: '' }
-
-const updateTitle = (title) => {
-  console.log('calling this function');
-  return { type: 'UPDATE TITLE', title: title }
-}
-
-const toggleEditing = () => {
-  console.log('toggle editing dispatched');
-  return { type: 'TOGGLE EDITING' }
-}
-
-// reducer({ title: 'Hello earthlings!', editing: false, newTitleText: '' }, { type: 'UPDATE TITLE', title: 'new Title' });
-
-const reducer = (state, action) => {
-  console.log('reducer was hit');
-  switch (action.type) {
-    case 'UPDATE TITLE':
-      return { ...state, title: action.title } // {editing: true, newTitleText: '', title: 'new Title'}
-    case 'TOGGLE EDITING':
-      return { ...state, editing: !state.editing} // {title: 'Hello earthlings!', newTitleText: '', editing: true}
-    default:
-      return { ...state };
-  }
-}
+import { setTitleAction, setTitleTextAction, toggleEditingAction } from '../actions/title-form.actions';
+import { initialTitleState, titleReducer } from '../reducers/title-form.reducer';
 
 const Title = () => {
-  const [state, dispatch] = useReducer(reducer, initialState)
-  const [newTitleText, setNewTitleText] = useState('');
-
-  const handleChanges = e => {
-    setNewTitleText(e.target.value);
-  };
-
-  const updateTitleDom = () => {
-    dispatch(updateTitle('new Title'))
-  }
+  const [state, dispatch] = useReducer(titleReducer, initialTitleState);
 
   return (
     <div>
@@ -44,9 +11,8 @@ const Title = () => {
         <div>
           <h1>
             {state.title}{' '}
-            <i onClick={() => dispatch(toggleEditing())} className="far fa-edit" />
+            <i onClick={() => dispatch(toggleEditingAction())} className="far fa-edit" />
           </h1>
-          <button onClick={updateTitleDom}>submit</button>
         </div>
       ) : (
         <div>
@@ -54,13 +20,14 @@ const Title = () => {
             className="title-input"
             type="text"
             name="newTitleText"
-            value={newTitleText}
-            onChange={handleChanges}
+            value={state.newTitleText}
+            onChange={(e) => dispatch(setTitleTextAction(e.target.value))}
           />
           <button
             onClick={() => {
-              setTitle(newTitleText);
-              setEditing(false);
+              dispatch(setTitleAction(state.newTitleText))
+              dispatch(setTitleTextAction(''))
+              dispatch(toggleEditingAction());
             }}
           >
             Update title
