@@ -7,13 +7,15 @@ const initialState = {
 }
 
 const updateTitle = (title) => {
+  console.log('calling this function');
   return { type: 'UPDATE TITLE', title: title }
 }
 
 const reducer = (state, action) => {
+  console.log('reducer was hit');
   switch (action.type) {
     case 'UPDATE TITLE':
-      return { ...state, title: action.title }
+      return { ...state, title: action.title } // {editing: false, newTitleText: '', title: 'new Title'}
     default:
       return { ...state };
   }
@@ -30,7 +32,7 @@ const Title = () => {
   };
 
   const updateTitleDom = () => {
-    updateTitle('new Title')
+    dispatch(updateTitle('new Title'))
   }
 
   return (
